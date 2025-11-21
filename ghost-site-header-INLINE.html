@@ -1,0 +1,211 @@
+<!--
+  ═══════════════════════════════════════════════════════════════
+  LITTLEFOOT FOOTNOTES - CUSTOM STYLING FOR INFODUMPSTERFIRE.COM
+  ═══════════════════════════════════════════════════════════════
+
+  INSTALLATION:
+  1. Go to Ghost Admin
+  2. Settings → Code Injection → Site Header
+  3. Paste this ENTIRE code block
+  4. Click Save
+
+  That's it! All your footnotes will now be bold, colorful, and larger.
+  ═══════════════════════════════════════════════════════════════
+-->
+
+<!-- Littlefoot Core Library (CSS) -->
+<link rel="stylesheet" href="https://unpkg.com/littlefoot/dist/littlefoot.css">
+
+<!-- Custom Littlefoot Styling -->
+<style>
+/* ============================================
+   FOOTNOTE BUTTON (the clickable indicator)
+   ============================================ */
+
+/* Main button styling - makes the numbers/ellipses BOLD and LARGER */
+.littlefoot__button {
+  /* Size and spacing */
+  font-size: 0.9rem !important;
+  padding: 0.15em 0.4em !important;
+  margin: 0 0.15em !important;
+
+  /* Make it BOLD */
+  font-weight: 700 !important;
+  line-height: 1 !important;
+
+  /* Color - CHANGE THESE TO MATCH YOUR SITE */
+  background-color: #3b82f6 !important;  /* Blue background */
+  color: #ffffff !important;              /* White text */
+  border: 2px solid #2563eb !important;   /* Darker blue border */
+
+  /* Shape and effects */
+  border-radius: 4px !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12) !important;
+  transition: all 0.2s ease !important;
+  opacity: 1 !important;
+  vertical-align: super !important;
+}
+
+/* Hover effect */
+.littlefoot__button:hover,
+.littlefoot__button:focus {
+  background-color: #2563eb !important;
+  border-color: #1d4ed8 !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Active/clicked state */
+.littlefoot__button:active,
+.littlefoot__button.is-active {
+  background-color: #1d4ed8 !important;
+  transform: translateY(0) !important;
+}
+
+/* Make the number/ellipses EXTRA BOLD */
+.littlefoot__button__ellipsis,
+.littlefoot__button__content {
+  font-weight: 900 !important;
+  font-size: 1em !important;
+  letter-spacing: 0.05em !important;
+}
+
+/* For ellipses: use THICK bullet points instead of thin periods */
+.littlefoot__button__ellipsis::before {
+  content: '•••' !important;  /* Thick bullets instead of ... */
+  font-weight: 900 !important;
+  letter-spacing: 0.1em !important;
+}
+
+/* ============================================
+   FOOTNOTE POPOVER (the popup content)
+   ============================================ */
+
+.littlefoot__popover {
+  max-width: 22rem !important;
+  background: #ffffff !important;
+  border: 2px solid #e5e7eb !important;
+  border-radius: 8px !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15) !important;
+  font-size: 0.95rem !important;
+  line-height: 1.6 !important;
+}
+
+.littlefoot__content {
+  padding: 1rem !important;
+  color: #1f2937 !important;
+}
+
+.littlefoot__wrapper {
+  background: #ffffff !important;
+  border-radius: 6px !important;
+}
+
+/* Links inside footnotes */
+.littlefoot__content a {
+  color: #3b82f6 !important;
+  text-decoration: underline !important;
+}
+
+.littlefoot__content a:hover {
+  color: #2563eb !important;
+}
+
+/* ============================================
+   MOBILE RESPONSIVE
+   ============================================ */
+
+@media (max-width: 768px) {
+  .littlefoot__button {
+    font-size: 0.85rem !important;
+    padding: 0.12em 0.35em !important;
+  }
+  .littlefoot__popover {
+    max-width: 90vw !important;
+    font-size: 0.9rem !important;
+  }
+}
+
+/* ============================================
+   ACCESSIBILITY
+   ============================================ */
+
+.littlefoot__button:focus-visible {
+  outline: 3px solid #3b82f6 !important;
+  outline-offset: 2px !important;
+}
+
+/* Dark mode support (if your site has it) */
+@media (prefers-color-scheme: dark) {
+  .littlefoot__popover {
+    background: #1f2937 !important;
+    border-color: #374151 !important;
+  }
+  .littlefoot__wrapper {
+    background: #1f2937 !important;
+  }
+  .littlefoot__content {
+    color: #f9fafb !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CUSTOMIZATION GUIDE:
+
+   TO CHANGE COLORS - Edit lines 31-33 above:
+   - Purple:  background: #8b5cf6, border: #7c3aed
+   - Orange:  background: #f97316, border: #ea580c
+   - Green:   background: #10b981, border: #059669
+   - Red:     background: #ef4444, border: #dc2626
+   - Dark:    background: #1f2937, border: #111827, color: #f9fafb
+
+   TO MAKE BIGGER - Edit line 22:
+   - Small:  0.8rem
+   - Medium: 0.9rem (current)
+   - Large:  1.0rem
+   - XL:     1.2rem
+
+   TO CHANGE SYMBOL - Edit line 60:
+   - Bullets:  '•••'  (current - thick and bold)
+   - Diamonds: '◆◆◆'
+   - Triangle: '▸'
+   - Dagger:   '†'
+   - Asterisk: '***'
+   ═══════════════════════════════════════════════════════════════ */
+</style>
+
+<!-- Littlefoot Core Library (JavaScript) -->
+<script src="https://unpkg.com/littlefoot/dist/littlefoot.js" defer></script>
+
+<!-- Initialize Littlefoot -->
+<script defer>
+document.addEventListener('DOMContentLoaded', function() {
+  if (typeof littlefoot !== 'undefined') {
+    littlefoot({
+      activateOnHover: false,      // Click to open (better for mobile)
+      dismissOnUnhover: false,      // Keep open until closed
+      hoverDelay: 250,              // Delay before showing
+
+      // Use NUMBERS by default (change below if you want ellipses)
+      buttonTemplate: '<button class="littlefoot__button" id="<% reference %>" title="See Footnote <% number %>" aria-label="Footnote <% number %>"><span class="littlefoot__button__content"><% number %></span></button>',
+
+      // TO USE ELLIPSES INSTEAD OF NUMBERS, uncomment this line and comment out the line above:
+      // buttonTemplate: '<button class="littlefoot__button" id="<% reference %>" title="See Footnote" aria-label="Footnote"><span class="littlefoot__button__ellipsis">...</span></button>',
+    });
+    console.log('✓ Littlefoot footnotes initialized!');
+  }
+});
+</script>
+
+<!--
+  ═══════════════════════════════════════════════════════════════
+  DONE! Your footnotes are now bold, colorful, and easier to see.
+
+  TO TEST: Create a post with this content:
+
+  This is a sentence with a footnote.[^1]
+
+  [^1]: This is the footnote content that will pop up!
+
+  ═══════════════════════════════════════════════════════════════
+-->

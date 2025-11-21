@@ -13,55 +13,57 @@ This guide will help you implement customized Littlefoot footnotes on your Ghost
 
 ## Quick Start
 
-### Option 1: Using Ghost Content Files (Recommended)
+### Recommended: All-in-One Inline Code (Easiest!)
 
-#### Step 1: Upload Custom Files to Ghost
+Ghost doesn't allow file uploads for custom CSS/JS libraries. Instead, you paste code directly into the code injection areas.
+
+#### Step 1: Copy the Code
+
+Open the file **`ghost-site-header-INLINE.html`** in this repository. This contains everything you need in one code block.
+
+**Or use the minimal version:** `ghost-site-header-MINIMAL.html` (lightweight, just the essential changes)
+
+#### Step 2: Add to Ghost Site Header
 
 1. Go to your Ghost Admin panel
-2. Navigate to **Settings** → **Labs** → **Routes** or use the file upload feature
-3. Upload these two files to your Ghost content directory:
-   - `littlefoot-custom.css`
-   - `littlefoot-init.js`
-4. Note the URLs where they're accessible (usually `/content/files/filename`)
+2. Navigate to **Settings** → **Code Injection**
+3. In the **Site Header** section, paste the ENTIRE code from `ghost-site-header-INLINE.html`
+4. Click **Save**
 
-#### Step 2: Add Code Injection
+**That's it!** The code will apply to ALL posts on your site automatically.
 
-1. In Ghost Admin, go to **Settings** → **Code Injection**
-2. In the **Site Header** section, paste the following code:
+#### Why Site Header (not Site Footer)?
+
+- ✅ CSS loads early, preventing flash of unstyled content
+- ✅ Applies to all posts automatically
+- ✅ JavaScript is deferred, so it doesn't slow page load
+
+#### Alternative: Per-Post Injection
+
+If you only want custom footnotes on specific posts:
+
+1. Open the post in Ghost editor
+2. Click **Settings** (gear icon) → **Code Injection**
+3. Paste the code into **Post Header**
+4. Publish
+
+This is useful if you want different footnote styles on different posts, but most people should use Site Header for site-wide consistency.
+
+### Alternative: External Hosting (Advanced)
+
+If you want to host the CSS/JS files externally (GitHub Pages, Cloudflare, etc.):
+
+1. Upload `littlefoot-custom.css` and `littlefoot-init.js` to your hosting
+2. Reference them in Ghost Site Header:
 
 ```html
-<!-- Littlefoot Core CSS -->
 <link rel="stylesheet" href="https://unpkg.com/littlefoot/dist/littlefoot.css" />
-
-<!-- Custom Littlefoot Styling -->
-<link rel="stylesheet" href="/content/files/littlefoot-custom.css" />
-
-<!-- Littlefoot Core JavaScript -->
+<link rel="stylesheet" href="https://your-site.com/littlefoot-custom.css" />
 <script src="https://unpkg.com/littlefoot/dist/littlefoot.js" defer></script>
-
-<!-- Custom Littlefoot Initialization -->
-<script src="/content/files/littlefoot-init.js" defer></script>
+<script src="https://your-site.com/littlefoot-init.js" defer></script>
 ```
 
-3. Click **Save**
-
-### Option 2: Inline Code (No File Upload Required)
-
-If you prefer not to upload files, you can include everything inline:
-
-1. Go to **Settings** → **Code Injection** → **Site Header**
-2. Copy the contents of `littlefoot-custom.css` into a `<style>` tag
-3. Copy the contents of `littlefoot-init.js` into a `<script>` tag
-4. See `ghost-header-injection.html` for the template
-
-### Option 3: External CDN/GitHub
-
-Host the files on GitHub Pages, Cloudflare, or another CDN and reference them:
-
-```html
-<link rel="stylesheet" href="https://your-cdn.com/littlefoot-custom.css" />
-<script src="https://your-cdn.com/littlefoot-init.js" defer></script>
-```
+But the inline method is simpler and doesn't require external hosting!
 
 ## Using Footnotes in Your Posts
 

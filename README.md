@@ -16,31 +16,28 @@ Transforms thin, hard-to-see ellipses (`...`) or standard footnote numbers into 
 
 | File | Purpose |
 |------|---------|
-| `littlefoot-custom.css` | Custom styling (colors, sizes, boldness) |
-| `littlefoot-init.js` | JavaScript configuration and initialization |
-| `ghost-header-injection.html` | Code snippet for Ghost header |
-| `IMPLEMENTATION-GUIDE.md` | Detailed setup instructions |
-| `QUICK-REFERENCE.md` | Quick customization cheat sheet |
+| **`ghost-site-header-INLINE.html`** | **⭐ START HERE - Complete inline code for Ghost** |
+| **`ghost-site-header-MINIMAL.html`** | **Lightweight version (essential changes only)** |
+| `littlefoot-custom.css` | Standalone CSS (for external hosting) |
+| `littlefoot-init.js` | Standalone JavaScript (for external hosting) |
+| `IMPLEMENTATION-GUIDE.md` | Detailed setup instructions with troubleshooting |
+| `QUICK-REFERENCE.md` | Fast customization cheat sheet |
 
 ## 🚀 Quick Start
 
-### 1. Upload Files to Ghost
+### 1. Copy the Code
 
-Upload `littlefoot-custom.css` and `littlefoot-init.js` to your Ghost content files.
+Open **`ghost-site-header-INLINE.html`** - this has ALL the code you need in one place.
 
-### 2. Add to Ghost Header
+(Or use **`ghost-site-header-MINIMAL.html`** for a lightweight version)
 
-Go to **Settings** → **Code Injection** → **Site Header** and paste:
+### 2. Paste into Ghost
 
-```html
-<!-- Littlefoot Core -->
-<link rel="stylesheet" href="https://unpkg.com/littlefoot/dist/littlefoot.css" />
-<script src="https://unpkg.com/littlefoot/dist/littlefoot.js" defer></script>
+1. Ghost Admin → **Settings** → **Code Injection** → **Site Header**
+2. Paste the ENTIRE code block
+3. Click **Save**
 
-<!-- Custom Styling -->
-<link rel="stylesheet" href="/content/files/littlefoot-custom.css" />
-<script src="/content/files/littlefoot-init.js" defer></script>
-```
+Done! Applies to all posts automatically.
 
 ### 3. Use Footnotes in Posts
 
