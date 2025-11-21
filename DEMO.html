@@ -106,10 +106,10 @@
       font-weight: 700 !important;
       line-height: 1 !important;
 
-      /* Color - CHANGE THESE TO MATCH YOUR SITE */
-      background-color: #3b82f6 !important;  /* Blue background */
-      color: #ffffff !important;              /* White text */
-      border: 2px solid #2563eb !important;   /* Darker blue border */
+      /* INFODUMPSTERFIRE.COM CUSTOM COLORS - Dark Version */
+      background-color: #610317 !important;  /* Deep red/maroon */
+      color: #fbe8e8 !important;              /* Light pink/cream */
+      border: 2px solid #610317 !important;   /* Matching border */
 
       /* Shape and effects */
       border-radius: 4px !important;
@@ -122,16 +122,16 @@
     /* Hover effect */
     .littlefoot__button:hover,
     .littlefoot__button:focus {
-      background-color: #2563eb !important;
-      border-color: #1d4ed8 !important;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2) !important;
+      background-color: #ab0528 !important;  /* Lighter red on hover */
+      border-color: #ab0528 !important;
+      box-shadow: 0 2px 6px rgba(97, 3, 23, 0.3) !important;
       transform: translateY(-1px) !important;
     }
 
     /* Active/clicked state */
     .littlefoot__button:active,
     .littlefoot__button.is-active {
-      background-color: #1d4ed8 !important;
+      background-color: #ab0528 !important;
       transform: translateY(0) !important;
     }
 
@@ -186,7 +186,10 @@
 
   <div class="demo-header">
     <h1>🎨 Littlefoot Custom Footnotes Demo</h1>
-    <p>Interactive preview for infodumpsterfire.com - Click the footnote numbers to see the popovers!</p>
+    <p>Interactive preview for infodumpsterfire.com with your custom brand colors!</p>
+    <p style="margin-top: 0.5rem; font-size: 0.9em;">
+      <strong>Dark Version:</strong> #610317 background • #fbe8e8 text • Hover: #ab0528
+    </p>
   </div>
 
   <div class="content-section">
@@ -233,28 +236,29 @@
   </div>
 
   <div class="content-section">
-    <h2>⚙️ Customization Options</h2>
-    <p>You can easily customize the colors in the CSS. Here are some preset options:</p>
+    <h2>🎨 Your Brand Colors</h2>
+    <p><strong>Currently showing: Dark Version</strong> - Deep maroon buttons with light pink text</p>
     <div class="color-demo">
-      <div class="color-demo-item" style="background: #3b82f6; color: white;">
-        Blue (Current)
+      <div class="color-demo-item" style="background: #610317; color: #fbe8e8; border: 2px solid #610317;">
+        Version 1: Dark<br>(Current Demo)
       </div>
-      <div class="color-demo-item" style="background: #8b5cf6; color: white;">
-        Purple
+      <div class="color-demo-item" style="background: #ab0528; color: #fbe8e8; border: 2px solid #ab0528;">
+        Dark Hover State
       </div>
-      <div class="color-demo-item" style="background: #f97316; color: white;">
-        Orange
+      <div class="color-demo-item" style="background: #fbe8e8; color: #610317; border: 2px solid #610317;">
+        Version 2: Light<br>(Inverse)
       </div>
-      <div class="color-demo-item" style="background: #10b981; color: white;">
-        Green
-      </div>
-      <div class="color-demo-item" style="background: #1f2937; color: white;">
-        Dark
+      <div class="color-demo-item" style="background: #f4bbb6; color: #610317; border: 2px solid #610317;">
+        Light Hover State
       </div>
     </div>
-    <p>
-      Simply change the <code>background-color</code> value in the CSS to any of these colors (or any other color you prefer!).
-    </p>
+    <div class="instructions">
+      <strong>Two versions created for you:</strong>
+      <ul style="margin: 0.5rem 0 0 0; padding-left: 1.5rem;">
+        <li><code>ghost-site-header-INLINE.html</code> - Dark version (#610317 background)</li>
+        <li><code>ghost-site-header-INLINE-LIGHT.html</code> - Light version (#fbe8e8 background)</li>
+      </ul>
+    </div>
   </div>
 
   <div class="content-section">
