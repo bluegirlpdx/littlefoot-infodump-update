@@ -118,6 +118,33 @@
       font-weight: 900;
     }
 
+    /* Light version preview buttons */
+    .static-preview-button-light {
+      font-size: 0.9rem;
+      padding: 0.15em 0.4em;
+      margin: 0 0.15em;
+      font-weight: 700;
+      background-color: #fbe8e8;
+      color: #610317;
+      border: 2px solid #610317;
+      border-radius: 4px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+      vertical-align: super;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .static-preview-button-light:hover {
+      background-color: #f4bbb6;
+      border-color: #610317;
+      transform: translateY(-1px);
+      box-shadow: 0 2px 6px rgba(97, 3, 23, 0.3);
+    }
+
+    .static-preview-button-light span {
+      font-weight: 900;
+    }
+
     /* ============================================
        CUSTOM LITTLEFOOT STYLING (THIS IS THE IMPORTANT PART!)
        ============================================ */
@@ -215,7 +242,8 @@
     <h1>🎨 Littlefoot Custom Footnotes Demo</h1>
     <p>Interactive preview for infodumpsterfire.com with your custom brand colors!</p>
     <p style="margin-top: 0.5rem; font-size: 0.9em;">
-      <strong>Dark Version:</strong> #610317 background • #fbe8e8 text • Hover: #ab0528
+      <strong>Version 1 (Dark):</strong> #610317 background • #fbe8e8 text • Hover: #ab0528<br>
+      <strong>Version 2 (Light):</strong> #fbe8e8 background • #610317 text • Hover: #f4bbb6
     </p>
   </div>
 
@@ -229,17 +257,33 @@
     </div>
 
     <div style="background: #f3f4f6; padding: 1.5rem; border-radius: 8px; margin: 1rem 0; border: 2px solid #610317;">
-      <p style="margin: 0 0 1rem 0;"><strong>✨ Static Preview - This is EXACTLY how they'll appear on your site:</strong></p>
+      <p style="margin: 0 0 1rem 0;"><strong>✨ Version 1: Dark (Numbers)</strong></p>
       <p style="margin: 0; font-size: 1.1em; line-height: 1.8;">
         This is a paragraph with a footnote<button class="static-preview-button"><span>1</span></button>
         and another one<button class="static-preview-button"><span>2</span></button>
         in the same paragraph.<button class="static-preview-button"><span>3</span></button>
       </p>
       <p style="margin: 1rem 0 0.5rem 0; font-size: 0.85em; color: #6b7280;">
-        <strong>Hover over the buttons</strong> to see them change to the lighter red (#ab0528)
+        <strong>Hover over the buttons</strong> to see them rise and change to lighter red (#ab0528)
       </p>
       <p style="margin: 0; font-size: 0.85em; color: #6b7280;">
-        Colors: #610317 background • #fbe8e8 text • #ab0528 on hover
+        Colors: #610317 background • #fbe8e8 text • Hover: #ab0528
+      </p>
+    </div>
+
+    <div style="background: #fef3f3; padding: 1.5rem; border-radius: 8px; margin: 1rem 0; border: 2px solid #610317;">
+      <p style="margin: 0 0 1rem 0;"><strong>✨ Version 2: Light (Symbols)</strong></p>
+      <p style="margin: 0; font-size: 1.1em; line-height: 1.8;">
+        This is a paragraph with a footnote<button class="static-preview-button-light"><span>•••</span></button>
+        and another one<button class="static-preview-button-light"><span>†</span></button>
+        or use diamonds<button class="static-preview-button-light"><span>◆◆◆</span></button>
+        or triangles<button class="static-preview-button-light"><span>▸</span></button>
+      </p>
+      <p style="margin: 1rem 0 0.5rem 0; font-size: 0.85em; color: #6b7280;">
+        <strong>Hover over these</strong> to see them rise and change to medium pink (#f4bbb6)
+      </p>
+      <p style="margin: 0; font-size: 0.85em; color: #6b7280;">
+        Colors: #fbe8e8 background • #610317 text • Hover: #f4bbb6
       </p>
     </div>
 
