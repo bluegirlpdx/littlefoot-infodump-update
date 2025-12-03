@@ -91,6 +91,33 @@
       color: #92400e;
     }
 
+    /* Static preview buttons (for when CDN doesn't load) */
+    .static-preview-button {
+      font-size: 0.9rem;
+      padding: 0.15em 0.4em;
+      margin: 0 0.15em;
+      font-weight: 700;
+      background-color: #610317;
+      color: #fbe8e8;
+      border: 2px solid #610317;
+      border-radius: 4px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+      vertical-align: super;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .static-preview-button:hover {
+      background-color: #ab0528;
+      border-color: #ab0528;
+      transform: translateY(-1px);
+      box-shadow: 0 2px 6px rgba(97, 3, 23, 0.3);
+    }
+
+    .static-preview-button span {
+      font-weight: 900;
+    }
+
     /* ============================================
        CUSTOM LITTLEFOOT STYLING (THIS IS THE IMPORTANT PART!)
        ============================================ */
@@ -193,7 +220,30 @@
   </div>
 
   <div class="content-section">
-    <h2>📝 Basic Example</h2>
+    <h2>📝 What Your Footnotes Will Look Like</h2>
+
+    <div class="instructions" style="background: #fee2e2; border-left-color: #dc2626;">
+      <strong>⚠️ Important:</strong> If you see <span style="color: #2563eb; text-decoration: underline;">blue underlined numbers</span> below,
+      the demo isn't working (CDN blocked when opening locally). <strong>Don't worry!</strong> Look at the static preview box
+      below to see how they'll actually look on your Ghost site.
+    </div>
+
+    <div style="background: #f3f4f6; padding: 1.5rem; border-radius: 8px; margin: 1rem 0; border: 2px solid #610317;">
+      <p style="margin: 0 0 1rem 0;"><strong>✨ Static Preview - This is EXACTLY how they'll appear on your site:</strong></p>
+      <p style="margin: 0; font-size: 1.1em; line-height: 1.8;">
+        This is a paragraph with a footnote<button class="static-preview-button"><span>1</span></button>
+        and another one<button class="static-preview-button"><span>2</span></button>
+        in the same paragraph.<button class="static-preview-button"><span>3</span></button>
+      </p>
+      <p style="margin: 1rem 0 0.5rem 0; font-size: 0.85em; color: #6b7280;">
+        <strong>Hover over the buttons</strong> to see them change to the lighter red (#ab0528)
+      </p>
+      <p style="margin: 0; font-size: 0.85em; color: #6b7280;">
+        Colors: #610317 background • #fbe8e8 text • #ab0528 on hover
+      </p>
+    </div>
+
+    <p><strong>Live Interactive Example (if CDN loads):</strong></p>
     <p>
       This is a paragraph with a footnote.<sup id="fnref:1"><a href="#fn:1">1</a></sup>
       Notice how the footnote number is <strong>bold</strong>, <strong>colorful</strong>,
@@ -203,8 +253,8 @@
       You can have multiple footnotes in the same paragraph.<sup id="fnref:2"><a href="#fn:2">2</a></sup>
       They all get the same beautiful styling.<sup id="fnref:3"><a href="#fn:3">3</a></sup>
     </p>
-    <div class="instructions">
-      <strong>👆 Try it:</strong> Click on any of the blue numbered footnotes above to see the popup in action!
+    <div class="instructions" id="littlefoot-status">
+      <strong>👆 Try it:</strong> Click on any of the footnote numbers above to see the popup in action!
     </div>
   </div>
 
@@ -330,19 +380,43 @@
 
   <!-- Initialize Littlefoot -->
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    // Check if Littlefoot loaded after a short delay
+    setTimeout(function() {
+      var statusDiv = document.getElementById('littlefoot-status');
+
       if (typeof littlefoot !== 'undefined') {
-        littlefoot({
-          activateOnHover: false,
-          dismissOnUnhover: false,
-          hoverDelay: 250,
-          buttonTemplate: '<button class="littlefoot__button" id="<% reference %>" title="See Footnote <% number %>" aria-label="Footnote <% number %>"><span class="littlefoot__button__content"><% number %></span></button>',
-        });
-        console.log('✓ Littlefoot demo loaded successfully!');
+        try {
+          littlefoot({
+            activateOnHover: false,
+            dismissOnUnhover: false,
+            hoverDelay: 250,
+            buttonTemplate: '<button class="littlefoot__button" id="<% reference %>" title="See Footnote <% number %>" aria-label="Footnote <% number %>"><span class="littlefoot__button__content"><% number %></span></button>',
+          });
+          console.log('✓ Littlefoot demo loaded successfully!');
+
+          // Update status message
+          if (statusDiv) {
+            statusDiv.innerHTML = '<strong style="color: #059669;">✓ Success!</strong> Littlefoot loaded. The footnotes above should now be styled maroon buttons. Click them to see the popup!';
+            statusDiv.style.background = '#d1fae5';
+            statusDiv.style.borderLeftColor = '#059669';
+          }
+        } catch (e) {
+          console.error('Littlefoot initialization error:', e);
+          if (statusDiv) {
+            statusDiv.innerHTML = '<strong style="color: #dc2626;">⚠️ Error:</strong> Littlefoot failed to initialize. See static preview above for how footnotes will look.';
+            statusDiv.style.background = '#fee2e2';
+            statusDiv.style.borderLeftColor = '#dc2626';
+          }
+        }
       } else {
         console.error('Littlefoot library failed to load from CDN');
+        if (statusDiv) {
+          statusDiv.innerHTML = '<strong style="color: #dc2626;">⚠️ CDN Blocked:</strong> Opening HTML files locally often blocks external scripts. <strong>This is normal!</strong><br>Your footnotes will work perfectly on your Ghost site. See the static preview above for how they\'ll look.';
+          statusDiv.style.background = '#fee2e2';
+          statusDiv.style.borderLeftColor = '#dc2626';
+        }
       }
-    });
+    }, 1000); // Wait 1 second for CDN to load
   </script>
 
 </body>
