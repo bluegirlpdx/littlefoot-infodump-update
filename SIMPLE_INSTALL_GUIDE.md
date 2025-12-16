@@ -193,15 +193,9 @@ In an HTML card in Ghost, write:
 
 ## 🎨 Quick Color Reference
 
-Your current colors:
-- **Dark version:** `#610317` background, `#fbe8e8` text, `#ab0528` hover
-- **Light version:** Use `ghost-site-header-INLINE-LIGHT.html` instead
-
-Popular color combos:
-- **Blue:** `#3b82f6` background, `#ffffff` text, `#2563eb` hover
-- **Purple:** `#8b5cf6` background, `#ffffff` text, `#7c3aed` hover
-- **Green:** `#10b981` background, `#ffffff` text, `#059669` hover
-- **Dark:** `#1f2937` background, `#f9fafb` text, `#111827` hover
+Infodumpster Fire Branded custom color combos:
+- **Brand custom colorway - Dark:** `#610317` background, `#fbe8e8` text, `#ab0528` hover (use `ghost-site-header-INLINE.html`)
+- **Brand custom colorway - Light:** `#fbe8e8` background, `#610317` text, `#f4bbb6` hover (use `ghost-site-header-INLINE-LIGHT.html`)
 
 ---
 
