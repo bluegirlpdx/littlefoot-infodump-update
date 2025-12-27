@@ -158,8 +158,15 @@
   'use strict';
 
   function initLittlefoot() {
-    // Check multiple possible exports (v4 compatibility)
-    var lfInit = window.littlefoot || (window.Littlefoot && window.Littlefoot.default) || window.Littlefoot;
+    // Handle ES module export format (check default first, then littlefoot property)
+    var lfInit;
+    if (window.littlefoot && typeof window.littlefoot.default === 'function') {
+      lfInit = window.littlefoot.default;
+    } else if (window.littlefoot && typeof window.littlefoot.littlefoot === 'function') {
+      lfInit = window.littlefoot.littlefoot;
+    } else if (typeof window.littlefoot === 'function') {
+      lfInit = window.littlefoot;
+    }
 
     if (typeof lfInit === 'function') {
       try {
@@ -169,14 +176,12 @@
           hoverDelay: 250,
           buttonTemplate: '<button class="littlefoot__button" id="<% reference %>" title="See Footnote <% number %>" aria-label="Footnote <% number %>"><span class="littlefoot__button__content"><% number %></span></button>',
         });
-        console.log('✅ Littlefoot v4 initialized successfully!');
+        console.log('✅ Littlefoot initialized successfully!');
       } catch (e) {
         console.error('❌ Error initializing Littlefoot:', e);
       }
     } else {
-      console.error('❌ Littlefoot library not loaded. Type found:', typeof lfInit);
-      console.log('Debug: window.littlefoot =', window.littlefoot);
-      console.log('Debug: window.Littlefoot =', window.Littlefoot);
+      console.error('❌ Littlefoot function not found. Type:', typeof lfInit);
     }
   }
 
@@ -185,7 +190,7 @@
   var maxAttempts = 10;
 
   function tryInit() {
-    if (window.littlefoot || window.Littlefoot) {
+    if (window.littlefoot) {
       initLittlefoot();
     } else if (attempts < maxAttempts) {
       attempts++;
