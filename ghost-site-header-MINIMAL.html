@@ -46,13 +46,23 @@
 }
 </style>
 
-<script src="https://unpkg.com/littlefoot/dist/littlefoot.js" defer></script>
-<script defer>
-document.addEventListener('DOMContentLoaded', function() {
-  if (typeof littlefoot !== 'undefined') {
-    littlefoot();
+<script src="https://unpkg.com/littlefoot/dist/littlefoot.js"></script>
+<script>
+(function() {
+  function init() {
+    if (typeof littlefoot !== 'undefined') {
+      littlefoot();
+      console.log('✓ Littlefoot initialized');
+    } else {
+      console.error('Littlefoot library not loaded');
+    }
   }
-});
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() { setTimeout(init, 100); });
+  } else {
+    setTimeout(init, 100);
+  }
+})();
 </script>
 
 <!-- Done! Test with: This is text.[^1]  then  [^1]: Footnote content -->

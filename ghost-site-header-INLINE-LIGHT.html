@@ -180,26 +180,46 @@
 </style>
 
 <!-- Littlefoot Core Library (JavaScript) -->
-<script src="https://unpkg.com/littlefoot/dist/littlefoot.js" defer></script>
+<script src="https://unpkg.com/littlefoot/dist/littlefoot.js"></script>
 
-<!-- Initialize Littlefoot -->
-<script defer>
-document.addEventListener('DOMContentLoaded', function() {
-  if (typeof littlefoot !== 'undefined') {
-    littlefoot({
-      activateOnHover: false,      // Click to open (better for mobile)
-      dismissOnUnhover: false,      // Keep open until closed
-      hoverDelay: 250,              // Delay before showing
+<!-- Initialize Littlefoot with retry logic -->
+<script>
+(function initializeLittlefoot() {
+  // Function to initialize Littlefoot
+  function init() {
+    if (typeof littlefoot !== 'undefined') {
+      try {
+        littlefoot({
+          activateOnHover: false,      // Click to open (better for mobile)
+          dismissOnUnhover: false,      // Keep open until closed
+          hoverDelay: 250,              // Delay before showing
 
-      // Use NUMBERS by default (change below if you want ellipses)
-      buttonTemplate: '<button class="littlefoot__button" id="<% reference %>" title="See Footnote <% number %>" aria-label="Footnote <% number %>"><span class="littlefoot__button__content"><% number %></span></button>',
+          // Use NUMBERS by default (change below if you want ellipses)
+          buttonTemplate: '<button class="littlefoot__button" id="<% reference %>" title="See Footnote <% number %>" aria-label="Footnote <% number %>"><span class="littlefoot__button__content"><% number %></span></button>',
 
-      // TO USE ELLIPSES INSTEAD OF NUMBERS, uncomment this line and comment out the line above:
-      // buttonTemplate: '<button class="littlefoot__button" id="<% reference %>" title="See Footnote" aria-label="Footnote"><span class="littlefoot__button__ellipsis">...</span></button>',
-    });
-    console.log('✓ Littlefoot footnotes initialized!');
+          // TO USE ELLIPSES INSTEAD OF NUMBERS, uncomment this line and comment out the line above:
+          // buttonTemplate: '<button class="littlefoot__button" id="<% reference %>" title="See Footnote" aria-label="Footnote"><span class="littlefoot__button__ellipsis">...</span></button>',
+        });
+        console.log('✓ Littlefoot footnotes initialized successfully!');
+      } catch (e) {
+        console.error('Error initializing Littlefoot:', e);
+      }
+    } else {
+      console.error('Littlefoot library not loaded. Check if CDN is accessible.');
+    }
   }
-});
+
+  // Try to initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      // Wait a bit for the CDN script to load
+      setTimeout(init, 100);
+    });
+  } else {
+    // DOM already loaded, initialize immediately (with small delay for CDN)
+    setTimeout(init, 100);
+  }
+})();
 </script>
 
 <!--
