@@ -179,16 +179,25 @@
 </style>
 
 <!-- Littlefoot Core Library (JavaScript) -->
-<script src="https://unpkg.com/littlefoot/dist/littlefoot.js"></script>
+<script src="https://unpkg.com/littlefoot@4.0.0/dist/littlefoot.js"></script>
 
-<!-- Initialize Littlefoot with retry logic -->
+<!-- Initialize Littlefoot with ES module support -->
 <script>
 (function initializeLittlefoot() {
-  // Function to initialize Littlefoot
   function init() {
-    if (typeof littlefoot !== 'undefined') {
+    // Handle ES module export format: window.littlefoot = {default: ƒ, littlefoot: ƒ}
+    var lfInit;
+    if (window.littlefoot && typeof window.littlefoot.default === 'function') {
+      lfInit = window.littlefoot.default;
+    } else if (window.littlefoot && typeof window.littlefoot.littlefoot === 'function') {
+      lfInit = window.littlefoot.littlefoot;
+    } else if (typeof window.littlefoot === 'function') {
+      lfInit = window.littlefoot;
+    }
+
+    if (typeof lfInit === 'function') {
       try {
-        littlefoot({
+        lfInit({
           activateOnHover: false,      // Click to open (better for mobile)
           dismissOnUnhover: false,      // Keep open until closed
           hoverDelay: 250,              // Delay before showing
@@ -208,15 +217,26 @@
     }
   }
 
+  // Wait for both DOM and script to load
+  var attempts = 0;
+  var maxAttempts = 10;
+
+  function tryInit() {
+    if (window.littlefoot) {
+      init();
+    } else if (attempts < maxAttempts) {
+      attempts++;
+      setTimeout(tryInit, 200);
+    } else {
+      console.error('Littlefoot failed to load after multiple attempts');
+    }
+  }
+
   // Try to initialize when DOM is ready
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function() {
-      // Wait a bit for the CDN script to load
-      setTimeout(init, 100);
-    });
+    document.addEventListener('DOMContentLoaded', tryInit);
   } else {
-    // DOM already loaded, initialize immediately (with small delay for CDN)
-    setTimeout(init, 100);
+    tryInit();
   }
 })();
 </script>
