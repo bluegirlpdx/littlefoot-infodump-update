@@ -1,0 +1,222 @@
+<!--
+  ═══════════════════════════════════════════════════════════════
+  LITTLEFOOT FOOTNOTES - CUSTOM STYLING FOR INFODUMPSTERFIRE.COM
+  Using Littlefoot v4.0.0 (stable version)
+  ═══════════════════════════════════════════════════════════════
+
+  INSTALLATION:
+  1. Go to Ghost Admin
+  2. Settings → Code Injection → Site Header
+  3. Paste this ENTIRE code block
+  4. Click Save
+
+  ═══════════════════════════════════════════════════════════════
+-->
+
+<!-- Littlefoot Core Library v4.0.0 CSS -->
+<link rel="stylesheet" href="https://unpkg.com/littlefoot@4.0.0/dist/littlefoot.css">
+
+<!-- Custom Littlefoot Styling -->
+<style>
+/* ============================================
+   FOOTNOTE BUTTON (the clickable indicator)
+   ============================================ */
+
+.littlefoot__button {
+  /* Size and spacing */
+  font-size: 0.9rem !important;
+  padding: 0.15em 0.4em !important;
+  margin: 0 0.15em !important;
+
+  /* Make it BOLD */
+  font-weight: 700 !important;
+  line-height: 1 !important;
+
+  /* INFODUMPSTERFIRE.COM COLORS - Dark Version */
+  background-color: #610317 !important;  /* Deep red/maroon */
+  color: #fbe8e8 !important;              /* Light pink/cream */
+  border: 2px solid #610317 !important;   /* Matching border */
+
+  /* Shape and effects */
+  border-radius: 4px !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12) !important;
+  transition: all 0.2s ease !important;
+  opacity: 1 !important;
+  vertical-align: super !important;
+}
+
+/* Hover effect */
+.littlefoot__button:hover,
+.littlefoot__button:focus {
+  background-color: #ab0528 !important;  /* Lighter red on hover */
+  border-color: #ab0528 !important;
+  box-shadow: 0 2px 6px rgba(97, 3, 23, 0.3) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Active/clicked state */
+.littlefoot__button:active,
+.littlefoot__button.is-active {
+  background-color: #ab0528 !important;
+  transform: translateY(0) !important;
+}
+
+/* Make the number/ellipses EXTRA BOLD */
+.littlefoot__button__ellipsis,
+.littlefoot__button__content {
+  font-weight: 900 !important;
+  font-size: 1em !important;
+  letter-spacing: 0.05em !important;
+}
+
+/* For ellipses: use THICK bullet points instead of thin periods */
+.littlefoot__button__ellipsis::before {
+  content: '•••' !important;  /* Thick bullets instead of ... */
+  font-weight: 900 !important;
+  letter-spacing: 0.1em !important;
+}
+
+/* ============================================
+   FOOTNOTE POPOVER (the popup content)
+   ============================================ */
+
+.littlefoot__popover {
+  max-width: 22rem !important;
+  background: #ffffff !important;
+  border: 2px solid #e5e7eb !important;
+  border-radius: 8px !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15) !important;
+  font-size: 0.95rem !important;
+  line-height: 1.6 !important;
+}
+
+.littlefoot__content {
+  padding: 1rem !important;
+  color: #1f2937 !important;
+}
+
+.littlefoot__wrapper {
+  background: #ffffff !important;
+  border-radius: 6px !important;
+}
+
+/* Links inside footnotes */
+.littlefoot__content a {
+  color: #610317 !important;
+  text-decoration: underline !important;
+}
+
+.littlefoot__content a:hover {
+  color: #ab0528 !important;
+}
+
+/* ============================================
+   MOBILE RESPONSIVE
+   ============================================ */
+
+@media (max-width: 768px) {
+  .littlefoot__button {
+    font-size: 0.85rem !important;
+    padding: 0.12em 0.35em !important;
+  }
+  .littlefoot__popover {
+    max-width: 90vw !important;
+    font-size: 0.9rem !important;
+  }
+}
+
+/* ============================================
+   ACCESSIBILITY
+   ============================================ */
+
+.littlefoot__button:focus-visible {
+  outline: 3px solid #610317 !important;
+  outline-offset: 2px !important;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .littlefoot__popover {
+    background: #1f2937 !important;
+    border-color: #374151 !important;
+  }
+  .littlefoot__wrapper {
+    background: #1f2937 !important;
+  }
+  .littlefoot__content {
+    color: #f9fafb !important;
+  }
+}
+</style>
+
+<!-- Littlefoot Core Library v4.0.0 JavaScript -->
+<script src="https://unpkg.com/littlefoot@4.0.0/dist/littlefoot.js"></script>
+
+<!-- Initialize Littlefoot -->
+<script>
+(function() {
+  'use strict';
+
+  function initLittlefoot() {
+    // Handle ES module export format (check default first, then littlefoot property)
+    var lfInit;
+    if (window.littlefoot && typeof window.littlefoot.default === 'function') {
+      lfInit = window.littlefoot.default;
+    } else if (window.littlefoot && typeof window.littlefoot.littlefoot === 'function') {
+      lfInit = window.littlefoot.littlefoot;
+    } else if (typeof window.littlefoot === 'function') {
+      lfInit = window.littlefoot;
+    }
+
+    if (typeof lfInit === 'function') {
+      try {
+        lfInit({
+          activateOnHover: false,
+          dismissOnUnhover: false,
+          hoverDelay: 250,
+          buttonTemplate: '<button class="littlefoot__button" id="<% reference %>" title="See Footnote <% number %>" aria-label="Footnote <% number %>"><span class="littlefoot__button__content"><% number %></span></button>',
+        });
+        console.log('✅ Littlefoot initialized successfully!');
+      } catch (e) {
+        console.error('❌ Error initializing Littlefoot:', e);
+      }
+    } else {
+      console.error('❌ Littlefoot function not found. Type:', typeof lfInit);
+    }
+  }
+
+  // Wait for both DOM and script to load
+  var attempts = 0;
+  var maxAttempts = 10;
+
+  function tryInit() {
+    if (window.littlefoot) {
+      initLittlefoot();
+    } else if (attempts < maxAttempts) {
+      attempts++;
+      setTimeout(tryInit, 200);
+    } else {
+      console.error('❌ Littlefoot failed to load after', maxAttempts, 'attempts');
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', tryInit);
+  } else {
+    tryInit();
+  }
+})();
+</script>
+
+<!--
+  ═══════════════════════════════════════════════════════════════
+  DONE! Using Littlefoot v4.0.0 (stable version)
+
+  TO TEST: Create a post with this content:
+
+  This is a sentence with a footnote.[^1]
+
+  [^1]: This is the footnote content that will pop up!
+
+  ═══════════════════════════════════════════════════════════════
+-->

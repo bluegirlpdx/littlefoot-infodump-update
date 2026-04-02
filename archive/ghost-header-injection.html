@@ -1,0 +1,61 @@
+<!--
+  Littlefoot Footnotes - Custom Implementation for infodumpsterfire.com
+
+  INSTRUCTIONS FOR GHOST:
+  1. Go to your Ghost Admin panel
+  2. Navigate to Settings > Code Injection
+  3. Paste this code into the "Site Header" section
+  4. Click "Save"
+
+  Make sure to upload littlefoot-custom.css and littlefoot-init.js to your Ghost content files
+  or host them on a CDN, then update the paths below.
+-->
+
+<!-- Littlefoot Core CSS (from CDN) -->
+<link rel="stylesheet" href="https://unpkg.com/littlefoot/dist/littlefoot.css" />
+
+<!-- Custom Littlefoot Styling -->
+<!--
+  OPTION 1: If you uploaded to Ghost content files, use:
+  <link rel="stylesheet" href="/content/files/littlefoot-custom.css" />
+
+  OPTION 2: If hosting elsewhere, update the URL:
+-->
+<link rel="stylesheet" href="/content/files/littlefoot-custom.css" />
+
+<!-- Littlefoot Core JavaScript (from CDN) -->
+<script src="https://unpkg.com/littlefoot/dist/littlefoot.js" defer></script>
+
+<!-- Custom Littlefoot Initialization -->
+<!--
+  OPTION 1: If you uploaded to Ghost content files, use:
+  <script src="/content/files/littlefoot-init.js" defer></script>
+
+  OPTION 2: If hosting elsewhere, update the URL:
+-->
+<script src="/content/files/littlefoot-init.js" defer></script>
+
+<!-- ALTERNATIVE: Inline version (no separate files needed) -->
+<!--
+<style>
+/* Paste contents of littlefoot-custom.css here if you prefer inline CSS */
+</style>
+
+<script defer>
+/* Paste contents of littlefoot-init.js here if you prefer inline JS */
+</script>
+-->
+
+<!--
+  QUICK START / TESTING VERSION:
+  Use this minimal version to test if Littlefoot is working before adding custom styles
+-->
+<!--
+<link rel="stylesheet" href="https://unpkg.com/littlefoot/dist/littlefoot.css" />
+<script src="https://unpkg.com/littlefoot/dist/littlefoot.js" defer></script>
+<script defer>
+  document.addEventListener('DOMContentLoaded', function() {
+    littlefoot();
+  });
+</script>
+-->

@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Littlefoot Custom Footnotes Demo - infodumpsterfire.com</title>
+
+  <!-- Littlefoot Core CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/littlefoot/dist/littlefoot.css">
+
+  <!-- Custom Littlefoot Styling -->
+  <style>
+    /* ============================================
+       DEMO PAGE STYLING (not part of footnotes)
+       ============================================ */
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      line-height: 1.7;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem;
+      background: #f9fafb;
+      color: #1f2937;
+    }
+
+    .demo-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 2rem;
+      border-radius: 12px;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .demo-header h1 {
+      margin: 0 0 0.5rem 0;
+      font-size: 2rem;
+    }
+
+    .demo-header p {
+      margin: 0;
+      opacity: 0.95;
+    }
+
+    .content-section {
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .content-section h2 {
+      margin-top: 0;
+      color: #3b82f6;
+      border-bottom: 2px solid #e5e7eb;
+      padding-bottom: 0.5rem;
+    }
+
+    .color-demo {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+
+    .color-demo-item {
+      padding: 1rem;
+      border-radius: 6px;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    code {
+      background: #f3f4f6;
+      padding: 0.2em 0.4em;
+      border-radius: 3px;
+      font-size: 0.9em;
+      color: #dc2626;
+    }
+
+    .instructions {
+      background: #fef3c7;
+      border-left: 4px solid #f59e0b;
+      padding: 1rem;
+      margin: 1rem 0;
+      border-radius: 4px;
+    }
+
+    .instructions strong {
+      color: #92400e;
+    }
+
+    /* Static preview buttons (for when CDN doesn't load) */
+    .static-preview-button {
+      font-size: 0.9rem;
+      padding: 0.15em 0.4em;
+      margin: 0 0.15em;
+      font-weight: 700;
+      background-color: #610317;
+      color: #fbe8e8;
+      border: 2px solid #610317;
+      border-radius: 4px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+      vertical-align: super;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .static-preview-button:hover {
+      background-color: #ab0528;
+      border-color: #ab0528;
+      transform: translateY(-1px);
+      box-shadow: 0 2px 6px rgba(97, 3, 23, 0.3);
+    }
+
+    .static-preview-button span {
+      font-weight: 900;
+    }
+
+    /* Light version preview buttons */
+    .static-preview-button-light {
+      font-size: 0.9rem;
+      padding: 0.15em 0.4em;
+      margin: 0 0.15em;
+      font-weight: 700;
+      background-color: #fbe8e8;
+      color: #610317;
+      border: 2px solid #610317;
+      border-radius: 4px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+      vertical-align: super;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .static-preview-button-light:hover {
+      background-color: #f4bbb6;
+      border-color: #610317;
+      transform: translateY(-1px);
+      box-shadow: 0 2px 6px rgba(97, 3, 23, 0.3);
+    }
+
+    .static-preview-button-light span {
+      font-weight: 900;
+    }
+
+    /* ============================================
+       CUSTOM LITTLEFOOT STYLING (THIS IS THE IMPORTANT PART!)
+       ============================================ */
+
+    /* Make footnote buttons BOLD, LARGE, and COLORFUL */
+    .littlefoot__button {
+      /* Size and spacing */
+      font-size: 0.9rem !important;
+      padding: 0.15em 0.4em !important;
+      margin: 0 0.15em !important;
+
+      /* Make it BOLD */
+      font-weight: 700 !important;
+      line-height: 1 !important;
+
+      /* INFODUMPSTERFIRE.COM CUSTOM COLORS - Dark Version */
+      background-color: #610317 !important;  /* Deep red/maroon */
+      color: #fbe8e8 !important;              /* Light pink/cream */
+      border: 2px solid #610317 !important;   /* Matching border */
+
+      /* Shape and effects */
+      border-radius: 4px !important;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12) !important;
+      transition: all 0.2s ease !important;
+      opacity: 1 !important;
+      vertical-align: super !important;
+    }
+
+    /* Hover effect */
+    .littlefoot__button:hover,
+    .littlefoot__button:focus {
+      background-color: #ab0528 !important;  /* Lighter red on hover */
+      border-color: #ab0528 !important;
+      box-shadow: 0 2px 6px rgba(97, 3, 23, 0.3) !important;
+      transform: translateY(-1px) !important;
+    }
+
+    /* Active/clicked state */
+    .littlefoot__button:active,
+    .littlefoot__button.is-active {
+      background-color: #ab0528 !important;
+      transform: translateY(0) !important;
+    }
+
+    /* Make the number/ellipses EXTRA BOLD */
+    .littlefoot__button__ellipsis,
+    .littlefoot__button__content {
+      font-weight: 900 !important;
+      font-size: 1em !important;
+      letter-spacing: 0.05em !important;
+    }
+
+    /* For ellipses: use THICK bullet points instead of thin periods */
+    .littlefoot__button__ellipsis::before {
+      content: '•••' !important;  /* Thick bullets instead of ... */
+      font-weight: 900 !important;
+      letter-spacing: 0.1em !important;
+    }
+
+    /* Popover styling */
+    .littlefoot__popover {
+      max-width: 22rem !important;
+      background: #ffffff !important;
+      border: 2px solid #e5e7eb !important;
+      border-radius: 8px !important;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15) !important;
+      font-size: 0.95rem !important;
+      line-height: 1.6 !important;
+    }
+
+    .littlefoot__content {
+      padding: 1rem !important;
+      color: #1f2937 !important;
+    }
+
+    .littlefoot__wrapper {
+      background: #ffffff !important;
+      border-radius: 6px !important;
+    }
+
+    /* Links inside footnotes */
+    .littlefoot__content a {
+      color: #3b82f6 !important;
+      text-decoration: underline !important;
+    }
+
+    .littlefoot__content a:hover {
+      color: #2563eb !important;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="demo-header">
+    <h1>🎨 Littlefoot Custom Footnotes Demo</h1>
+    <p>Interactive preview for infodumpsterfire.com with your custom brand colors!</p>
+    <p style="margin-top: 0.5rem; font-size: 0.9em;">
+      <strong>Version 1 (Dark):</strong> #610317 background • #fbe8e8 text • Hover: #ab0528<br>
+      <strong>Version 2 (Light):</strong> #fbe8e8 background • #610317 text • Hover: #f4bbb6
+    </p>
+  </div>
+
+  <div class="content-section">
+    <h2>📝 What Your Footnotes Will Look Like</h2>
+
+    <div class="instructions" style="background: #fee2e2; border-left-color: #dc2626;">
+      <strong>⚠️ Important:</strong> If you see <span style="color: #2563eb; text-decoration: underline;">blue underlined numbers</span> below,
+      the demo isn't working (CDN blocked when opening locally). <strong>Don't worry!</strong> Look at the static preview box
+      below to see how they'll actually look on your Ghost site.
+    </div>
+
+    <div style="background: #f3f4f6; padding: 1.5rem; border-radius: 8px; margin: 1rem 0; border: 2px solid #610317;">
+      <p style="margin: 0 0 1rem 0;"><strong>✨ Version 1: Dark (Numbers)</strong></p>
+      <p style="margin: 0; font-size: 1.1em; line-height: 1.8;">
+        This is a paragraph with a footnote<button class="static-preview-button"><span>1</span></button>
+        and another one<button class="static-preview-button"><span>2</span></button>
+        in the same paragraph.<button class="static-preview-button"><span>3</span></button>
+      </p>
+      <p style="margin: 1rem 0 0.5rem 0; font-size: 0.85em; color: #6b7280;">
+        <strong>Hover over the buttons</strong> to see them rise and change to lighter red (#ab0528)
+      </p>
+      <p style="margin: 0; font-size: 0.85em; color: #6b7280;">
+        Colors: #610317 background • #fbe8e8 text • Hover: #ab0528
+      </p>
+    </div>
+
+    <div style="background: #fef3f3; padding: 1.5rem; border-radius: 8px; margin: 1rem 0; border: 2px solid #610317;">
+      <p style="margin: 0 0 1rem 0;"><strong>✨ Version 2: Light (Symbols)</strong></p>
+      <p style="margin: 0; font-size: 1.1em; line-height: 1.8;">
+        This is a paragraph with a footnote<button class="static-preview-button-light"><span>•••</span></button>
+        and another one<button class="static-preview-button-light"><span>†</span></button>
+        or use diamonds<button class="static-preview-button-light"><span>◆◆◆</span></button>
+        or triangles<button class="static-preview-button-light"><span>▸</span></button>
+      </p>
+      <p style="margin: 1rem 0 0.5rem 0; font-size: 0.85em; color: #6b7280;">
+        <strong>Hover over these</strong> to see them rise and change to medium pink (#f4bbb6)
+      </p>
+      <p style="margin: 0; font-size: 0.85em; color: #6b7280;">
+        Colors: #fbe8e8 background • #610317 text • Hover: #f4bbb6
+      </p>
+    </div>
+
+    <p><strong>Live Interactive Example (if CDN loads):</strong></p>
+    <p>
+      This is a paragraph with a footnote.<sup id="fnref:1"><a href="#fn:1">1</a></sup>
+      Notice how the footnote number is <strong>bold</strong>, <strong>colorful</strong>,
+      and <strong>larger</strong> than the default thin ellipses.
+    </p>
+    <p>
+      You can have multiple footnotes in the same paragraph.<sup id="fnref:2"><a href="#fn:2">2</a></sup>
+      They all get the same beautiful styling.<sup id="fnref:3"><a href="#fn:3">3</a></sup>
+    </p>
+    <div class="instructions" id="littlefoot-status">
+      <strong>👆 Try it:</strong> Click on any of the footnote numbers above to see the popup in action!
+    </div>
+  </div>
+
+  <div class="content-section">
+    <h2>💡 What's Different?</h2>
+    <p>
+      <strong>Default Littlefoot:</strong> Uses thin, barely visible <code>...</code> ellipses or small superscript numbers.
+    </p>
+    <p>
+      <strong>Your Custom Version:</strong> Bold, colored buttons with clear numbers (or thick bullet points) that are impossible to miss!<sup id="fnref:4"><a href="#fn:4">4</a></sup>
+    </p>
+  </div>
+
+  <div class="content-section">
+    <h2>🎨 How It Looks in Context</h2>
+    <p>
+      The Byzantine Empire,<sup id="fnref:5"><a href="#fn:5">5</a></sup> also referred to as the Eastern Roman Empire,
+      was the continuation of the Roman Empire centered in Constantinople during Late Antiquity and the Middle Ages.
+    </p>
+    <p>
+      The city of Constantinople<sup id="fnref:6"><a href="#fn:6">6</a></sup> was founded by Constantine the Great
+      in 330 AD and became the capital of the Eastern Roman Empire. It remained the capital for over a thousand years,
+      until it fell to the Ottoman Turks in 1453.<sup id="fnref:7"><a href="#fn:7">7</a></sup>
+    </p>
+    <p>
+      The Justinian Code,<sup id="fnref:8"><a href="#fn:8">8</a></sup> compiled under Emperor Justinian I,
+      was one of the most important legal achievements of the Byzantine Empire and influenced European law for centuries.
+    </p>
+  </div>
+
+  <div class="content-section">
+    <h2>🎨 Your Brand Colors</h2>
+    <p><strong>Currently showing: Dark Version</strong> - Deep maroon buttons with light pink text</p>
+    <div class="color-demo">
+      <div class="color-demo-item" style="background: #610317; color: #fbe8e8; border: 2px solid #610317;">
+        Version 1: Dark<br>(Current Demo)
+      </div>
+      <div class="color-demo-item" style="background: #ab0528; color: #fbe8e8; border: 2px solid #ab0528;">
+        Dark Hover State
+      </div>
+      <div class="color-demo-item" style="background: #fbe8e8; color: #610317; border: 2px solid #610317;">
+        Version 2: Light<br>(Inverse)
+      </div>
+      <div class="color-demo-item" style="background: #f4bbb6; color: #610317; border: 2px solid #610317;">
+        Light Hover State
+      </div>
+    </div>
+    <div class="instructions">
+      <strong>Two versions created for you:</strong>
+      <ul style="margin: 0.5rem 0 0 0; padding-left: 1.5rem;">
+        <li><code>ghost-site-header-INLINE.html</code> - Dark version (#610317 background)</li>
+        <li><code>ghost-site-header-INLINE-LIGHT.html</code> - Light version (#fbe8e8 background)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="content-section">
+    <h2>📱 Mobile Friendly</h2>
+    <p>
+      Try resizing your browser window or viewing on mobile.<sup id="fnref:9"><a href="#fn:9">9</a></sup>
+      The footnotes automatically adjust their size and the popovers remain readable on small screens.
+    </p>
+  </div>
+
+  <div class="content-section">
+    <h2>✅ Ready to Install?</h2>
+    <div class="instructions">
+      <strong>Next Steps:</strong>
+      <ol style="margin: 0.5rem 0 0 0; padding-left: 1.5rem;">
+        <li>If you like what you see, open <code>ghost-site-header-INLINE.html</code> from the repository</li>
+        <li>Copy the ENTIRE contents</li>
+        <li>Go to Ghost Admin → Settings → Code Injection → Site Header</li>
+        <li>Paste and Save</li>
+        <li>Done! All your posts will have these beautiful footnotes</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- FOOTNOTE DEFINITIONS -->
+  <div class="footnotes">
+    <ol>
+      <li id="fn:1">
+        This is a footnote! See how it pops up in a nice clean box? Much better than scrolling to the bottom of the page.
+        <a href="#fnref:1" title="Return to text">↩</a>
+      </li>
+      <li id="fn:2">
+        You can put <strong>formatted text</strong>, <em>italics</em>, and even <a href="https://example.com">links</a> in your footnotes.
+        <a href="#fnref:2" title="Return to text">↩</a>
+      </li>
+      <li id="fn:3">
+        Footnotes can be as long or as short as you need. This one is short!
+        <a href="#fnref:3" title="Return to text">↩</a>
+      </li>
+      <li id="fn:4">
+        The custom styling makes footnotes <strong>50% larger</strong> and uses <strong>900-weight bold</strong> typography instead of the default 400-weight. The colored background and border make them stand out even more.
+        <a href="#fnref:4" title="Return to text">↩</a>
+      </li>
+      <li id="fn:5">
+        The Byzantine Empire lasted from 330 AD to 1453 AD, making it one of the longest-lasting empires in history. Check out <a href="https://en.wikipedia.org/wiki/Byzantine_Empire" target="_blank">Wikipedia</a> for more info.
+        <a href="#fnref:5" title="Return to text">↩</a>
+      </li>
+      <li id="fn:6">
+        Modern-day Istanbul, Turkey. The city has been known by several names throughout history: Byzantium, Constantinople, and Istanbul.
+        <a href="#fnref:6" title="Return to text">↩</a>
+      </li>
+      <li id="fn:7">
+        The Fall of Constantinople marked the end of the Byzantine Empire and is often considered the end of the Middle Ages. The Ottoman Sultan Mehmed II conquered the city after a 53-day siege.
+        <a href="#fnref:7" title="Return to text">↩</a>
+      </li>
+      <li id="fn:8">
+        Also known as the <em>Corpus Juris Civilis</em> (Body of Civil Law), it was a collection of fundamental works in jurisprudence issued from 529 to 534 by order of Justinian I.
+        <a href="#fnref:8" title="Return to text">↩</a>
+      </li>
+      <li id="fn:9">
+        The CSS includes responsive media queries that automatically adjust font sizes and popover widths for screens smaller than 768px and 480px.
+        <a href="#fnref:9" title="Return to text">↩</a>
+      </li>
+    </ol>
+  </div>
+
+  <!-- Littlefoot Core JavaScript -->
+  <script src="https://unpkg.com/littlefoot/dist/littlefoot.js"></script>
+
+  <!-- Initialize Littlefoot -->
+  <script>
+    // Check if Littlefoot loaded after a short delay
+    setTimeout(function() {
+      var statusDiv = document.getElementById('littlefoot-status');
+
+      if (typeof littlefoot !== 'undefined') {
+        try {
+          littlefoot({
+            activateOnHover: false,
+            dismissOnUnhover: false,
+            hoverDelay: 250,
+            buttonTemplate: '<button class="littlefoot__button" id="<% reference %>" title="See Footnote <% number %>" aria-label="Footnote <% number %>"><span class="littlefoot__button__content"><% number %></span></button>',
+          });
+          console.log('✓ Littlefoot demo loaded successfully!');
+
+          // Update status message
+          if (statusDiv) {
+            statusDiv.innerHTML = '<strong style="color: #059669;">✓ Success!</strong> Littlefoot loaded. The footnotes above should now be styled maroon buttons. Click them to see the popup!';
+            statusDiv.style.background = '#d1fae5';
+            statusDiv.style.borderLeftColor = '#059669';
+          }
+        } catch (e) {
+          console.error('Littlefoot initialization error:', e);
+          if (statusDiv) {
+            statusDiv.innerHTML = '<strong style="color: #dc2626;">⚠️ Error:</strong> Littlefoot failed to initialize. See static preview above for how footnotes will look.';
+            statusDiv.style.background = '#fee2e2';
+            statusDiv.style.borderLeftColor = '#dc2626';
+          }
+        }
+      } else {
+        console.error('Littlefoot library failed to load from CDN');
+        if (statusDiv) {
+          statusDiv.innerHTML = '<strong style="color: #dc2626;">⚠️ CDN Blocked:</strong> Opening HTML files locally often blocks external scripts. <strong>This is normal!</strong><br>Your footnotes will work perfectly on your Ghost site. See the static preview above for how they\'ll look.';
+          statusDiv.style.background = '#fee2e2';
+          statusDiv.style.borderLeftColor = '#dc2626';
+        }
+      }
+    }, 1000); // Wait 1 second for CDN to load
+  </script>
+
+</body>
+</html>

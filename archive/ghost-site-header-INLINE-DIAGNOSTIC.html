@@ -1,0 +1,105 @@
+<!--
+  DIAGNOSTIC VERSION - Use this to check what's happening
+  Paste this into Ghost Site Header temporarily to see what's wrong
+-->
+
+<!-- Littlefoot Core CSS -->
+<link rel="stylesheet" href="https://unpkg.com/littlefoot/dist/littlefoot.css">
+
+<!-- Custom Styling -->
+<style>
+.littlefoot__button {
+  font-size: 0.9rem !important;
+  padding: 0.15em 0.4em !important;
+  margin: 0 0.15em !important;
+  font-weight: 700 !important;
+  background-color: #610317 !important;
+  color: #fbe8e8 !important;
+  border: 2px solid #610317 !important;
+  border-radius: 4px !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12) !important;
+  transition: all 0.2s ease !important;
+  vertical-align: super !important;
+}
+
+.littlefoot__button:hover {
+  background-color: #ab0528 !important;
+  transform: translateY(-1px) !important;
+}
+
+.littlefoot__button__content {
+  font-weight: 900 !important;
+}
+</style>
+
+<!-- Try loading from jsdelivr CDN instead of unpkg -->
+<script src="https://cdn.jsdelivr.net/npm/littlefoot/dist/littlefoot.js"></script>
+
+<!-- Diagnostic and initialization -->
+<script>
+(function() {
+  console.log('=== LITTLEFOOT DIAGNOSTIC ===');
+
+  function diagnose() {
+    console.log('1. Checking if window.littlefoot exists:', typeof window.littlefoot);
+    console.log('2. Checking if littlefoot exists:', typeof littlefoot);
+    console.log('3. All window properties containing "little":', Object.keys(window).filter(k => k.toLowerCase().includes('little')));
+
+    // Try different possible exports
+    if (typeof window.littlefoot !== 'undefined') {
+      console.log('4. Found window.littlefoot, type:', typeof window.littlefoot);
+      if (typeof window.littlefoot === 'function') {
+        console.log('5. Attempting to initialize via window.littlefoot()');
+        try {
+          window.littlefoot({
+            activateOnHover: false,
+            buttonTemplate: '<button class="littlefoot__button" id="<% reference %>" title="See Footnote <% number %>"><span class="littlefoot__button__content"><% number %></span></button>',
+          });
+          console.log('✅ SUCCESS! Littlefoot initialized via window.littlefoot()');
+        } catch (e) {
+          console.error('❌ Error initializing:', e);
+        }
+      } else if (typeof window.littlefoot.default === 'function') {
+        console.log('5. Found window.littlefoot.default, attempting to initialize');
+        try {
+          window.littlefoot.default({
+            activateOnHover: false,
+            buttonTemplate: '<button class="littlefoot__button" id="<% reference %>" title="See Footnote <% number %>"><span class="littlefoot__button__content"><% number %></span></button>',
+          });
+          console.log('✅ SUCCESS! Littlefoot initialized via window.littlefoot.default()');
+        } catch (e) {
+          console.error('❌ Error initializing:', e);
+        }
+      }
+    } else if (typeof littlefoot !== 'undefined') {
+      console.log('4. Found littlefoot (no window prefix)');
+      try {
+        littlefoot({
+          activateOnHover: false,
+          buttonTemplate: '<button class="littlefoot__button" id="<% reference %>" title="See Footnote <% number %>"><span class="littlefoot__button__content"><% number %></span></button>',
+        });
+        console.log('✅ SUCCESS! Littlefoot initialized via littlefoot()');
+      } catch (e) {
+        console.error('❌ Error initializing:', e);
+      }
+    } else {
+      console.error('❌ Littlefoot library not found at all. CDN may be blocked.');
+    }
+  }
+
+  // Wait for DOM and give CDN time to load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      setTimeout(diagnose, 500);
+    });
+  } else {
+    setTimeout(diagnose, 500);
+  }
+})();
+</script>
+
+<!--
+  Check your browser console (F12) for diagnostic messages.
+  They will start with "=== LITTLEFOOT DIAGNOSTIC ==="
+  and tell you exactly what's wrong.
+-->

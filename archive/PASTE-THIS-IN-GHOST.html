@@ -1,0 +1,241 @@
+<!--
+  ═══════════════════════════════════════════════════════════════
+  LITTLEFOOT FOOTNOTES - INFODUMPSTERFIRE.COM
+  ONE FILE - EVERYTHING YOU NEED
+  ═══════════════════════════════════════════════════════════════
+
+  INSTALLATION:
+  1. Copy this ENTIRE file
+  2. Go to Ghost Admin → Settings → Code Injection → Site Header
+  3. Paste it in
+  4. Click Save
+  5. Done!
+
+  TO CHANGE COLORS: See line 50 below (just uncomment the version you want)
+
+  ═══════════════════════════════════════════════════════════════
+-->
+
+<!-- Littlefoot Core CSS -->
+<link rel="stylesheet" href="https://unpkg.com/littlefoot/dist/littlefoot.css">
+
+<!-- Custom Styling -->
+<style>
+/* ═══════════════════════════════════════════════════════════
+   CHOOSE YOUR COLOR VERSION:
+   Uncomment ONE section below (remove the /* and */)
+   ═══════════════════════════════════════════════════════════ */
+
+/* ─────────────────────────────────────────────────────────── */
+/* VERSION 1: DARK (MAROON BACKGROUND) - DEFAULT              */
+/* ─────────────────────────────────────────────────────────── */
+
+.littlefoot__button {
+  font-size: 0.9rem !important;
+  padding: 0.15em 0.4em !important;
+  margin: 0 0.15em !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+
+  /* Dark version colors */
+  background-color: #610317 !important;  /* Deep maroon */
+  color: #fbe8e8 !important;             /* Light pink text */
+  border: 2px solid #610317 !important;
+
+  border-radius: 4px !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12) !important;
+  transition: all 0.2s ease !important;
+  opacity: 1 !important;
+  vertical-align: super !important;
+}
+
+.littlefoot__button:hover,
+.littlefoot__button:focus {
+  background-color: #ab0528 !important;  /* Lighter red on hover */
+  border-color: #ab0528 !important;
+  box-shadow: 0 2px 6px rgba(97, 3, 23, 0.3) !important;
+  transform: translateY(-1px) !important;  /* Rises up on hover */
+}
+
+/* ─────────────────────────────────────────────────────────── */
+/* VERSION 2: LIGHT (PINK BACKGROUND) - UNCOMMENT TO USE      */
+/* Delete the /* above and */ below to activate this version  */
+/* ─────────────────────────────────────────────────────────── */
+
+/*
+.littlefoot__button {
+  font-size: 0.9rem !important;
+  padding: 0.15em 0.4em !important;
+  margin: 0 0.15em !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+
+  background-color: #fbe8e8 !important;
+  color: #610317 !important;
+  border: 2px solid #610317 !important;
+
+  border-radius: 4px !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12) !important;
+  transition: all 0.2s ease !important;
+  opacity: 1 !important;
+  vertical-align: super !important;
+}
+
+.littlefoot__button:hover,
+.littlefoot__button:focus {
+  background-color: #f4bbb6 !important;
+  border-color: #610317 !important;
+  box-shadow: 0 2px 6px rgba(97, 3, 23, 0.3) !important;
+  transform: translateY(-1px) !important;
+}
+*/
+
+/* ─────────────────────────────────────────────────────────── */
+/* SHARED STYLES (Apply to both versions)                     */
+/* ─────────────────────────────────────────────────────────── */
+
+.littlefoot__button:active,
+.littlefoot__button.is-active {
+  transform: translateY(0) !important;
+}
+
+.littlefoot__button__content {
+  font-weight: 900 !important;
+  font-size: 1em !important;
+  letter-spacing: 0.05em !important;
+}
+
+/* For ellipses (if you switch from numbers to symbols) */
+.littlefoot__button__ellipsis::before {
+  content: '•••' !important;  /* Change to: † or ◆◆◆ or ▸ */
+  font-weight: 900 !important;
+  letter-spacing: 0.1em !important;
+}
+
+/* Popover bubble styling */
+.littlefoot__popover {
+  max-width: 22rem !important;
+  background: #ffffff !important;
+  border: 2px solid #e5e7eb !important;
+  border-radius: 8px !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15) !important;
+  font-size: 0.95rem !important;
+  line-height: 1.6 !important;
+}
+
+.littlefoot__content {
+  padding: 1rem !important;
+  color: #1f2937 !important;
+}
+
+.littlefoot__wrapper {
+  background: #ffffff !important;
+  border-radius: 6px !important;
+}
+
+.littlefoot__content a {
+  color: #610317 !important;
+  text-decoration: underline !important;
+}
+
+.littlefoot__content a:hover {
+  color: #ab0528 !important;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .littlefoot__button {
+    font-size: 0.85rem !important;
+    padding: 0.12em 0.35em !important;
+  }
+  .littlefoot__popover {
+    max-width: 90vw !important;
+    font-size: 0.9rem !important;
+  }
+}
+
+/* Accessibility */
+.littlefoot__button:focus-visible {
+  outline: 3px solid #610317 !important;
+  outline-offset: 2px !important;
+}
+</style>
+
+<!-- Littlefoot Core JavaScript -->
+<script src="https://unpkg.com/littlefoot@4.0.0/dist/littlefoot.js"></script>
+
+<!-- Initialize Littlefoot -->
+<script>
+(function() {
+  'use strict';
+
+  function init() {
+    // Handle ES module format
+    var lfInit;
+    if (window.littlefoot && typeof window.littlefoot.default === 'function') {
+      lfInit = window.littlefoot.default;
+    } else if (window.littlefoot && typeof window.littlefoot.littlefoot === 'function') {
+      lfInit = window.littlefoot.littlefoot;
+    } else if (typeof window.littlefoot === 'function') {
+      lfInit = window.littlefoot;
+    }
+
+    if (typeof lfInit === 'function') {
+      try {
+        lfInit({
+          activateOnHover: false,
+          dismissOnUnhover: false,
+          hoverDelay: 250,
+
+          // NUMBERS (default) - to use symbols instead, see line 211 below
+          buttonTemplate: '<button class="littlefoot__button" id="<% reference %>" title="See Footnote <% number %>" aria-label="Footnote <% number %>"><span class="littlefoot__button__content"><% number %></span></button>',
+
+          // TO USE SYMBOLS INSTEAD: Delete the line above and uncomment this:
+          // buttonTemplate: '<button class="littlefoot__button" id="<% reference %>" title="See Footnote" aria-label="Footnote"><span class="littlefoot__button__ellipses">...</span></button>',
+        });
+        console.log('✅ Littlefoot initialized successfully!');
+      } catch (e) {
+        console.error('❌ Error:', e);
+      }
+    } else {
+      console.error('❌ Littlefoot not loaded');
+    }
+  }
+
+  // Wait for library to load
+  var attempts = 0;
+  function tryInit() {
+    if (window.littlefoot) {
+      init();
+    } else if (attempts < 10) {
+      attempts++;
+      setTimeout(tryInit, 200);
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', tryInit);
+  } else {
+    tryInit();
+  }
+})();
+</script>
+
+<!--
+  ═══════════════════════════════════════════════════════════════
+  DONE! THAT'S IT!
+
+  Your footnotes are now styled with your brand colors.
+
+  TO USE IN POSTS:
+  Just write: This is text.[^1]
+
+  Then: [^1]: This is the footnote content.
+
+  QUESTIONS?
+  - Colors: Line 50 (comment/uncomment versions)
+  - Symbols: Line 211 (comment/uncomment)
+  - Size: Line 42 (change 0.9rem to 1.2rem for bigger)
+
+  ═══════════════════════════════════════════════════════════════
+-->
