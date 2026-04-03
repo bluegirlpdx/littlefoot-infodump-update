@@ -1,14 +1,15 @@
 <!--
   ═══════════════════════════════════════════════════════════════
-  LITTLEFOOT FOOTNOTES - V2 UNIFIED WITH TOGGLE
-  Infodumpsterfire.com - April 2, 2026
+  LITTLEFOOT FOOTNOTES - V3 UNIFIED WITH TOGGLE
+  Infodumpsterfire.com - April 3, 2026
   ═══════════════════════════════════════════════════════════════
 
-  VERSION: V2_2026-04-02
-  CHANGES FROM V1:
-  - Button default state: LIGHT pink background (subtle, not distracting)
-  - Button hover state: Dark maroon with WHITE text (high contrast, accessible)
-  - Popover font size: 1.4rem (much more readable)
+  VERSION: V3_2026-04-03
+  CHANGES FROM V2:
+  - Popover font: Mulish (matches site), was serif default
+  - Popover size: 17px (matches body copy), was ~14px
+  - Popover text: centered with balanced padding
+  - Uses littlefoot CSS custom properties for reliable theming
   - All color combinations meet WCAG AAA contrast standards
 
   INSTALLATION:
@@ -36,6 +37,21 @@
 
 <!-- Custom Styling -->
 <style>
+/* ============================================
+   LITTLEFOOT CSS CUSTOM PROPERTIES
+   The proper way to theme Littlefoot 4.0
+   ============================================ */
+
+.littlefoot {
+  --popover-font-family: 'Mulish', sans-serif;
+  --popover-font-size: 17px;
+  --popover-font-weight: 200;
+  --popover-line-height: 1.6;
+  --popover-max-width: 28rem;
+  --popover-horizontal-padding: 1.2rem;
+  --popover-vertical-padding: 1rem;
+}
+
 /* ============================================
    FOOTNOTE BUTTONS (the clickable numbers)
    V2: Light by default, dark on hover
@@ -114,17 +130,25 @@ html body .littlefoot__popover {
   z-index: 999999 !important;
 }
 
-/* Content inside popup - BIGGER for readability */
+/* Content inside popup - matches site body copy */
 html body .littlefoot__content {
-  padding: 1.5rem !important;
-  color: #1f2937 !important;
-  font-size: 1.4rem !important;
-  line-height: 1.7 !important;
+  font-family: 'Mulish', sans-serif !important;
+  font-size: 17px !important;
+  font-weight: 200 !important;
+  line-height: 1.6 !important;
+  color: #333333 !important;
+  text-align: center !important;
+  padding: 1rem 1.2rem !important;
 }
 
 html body .littlefoot__wrapper {
   background: #ffffff !important;
   border-radius: 6px !important;
+}
+
+/* Catch-all: force Mulish on everything inside popover */
+html body .littlefoot__content * {
+  font-family: 'Mulish', sans-serif !important;
 }
 
 /* Links inside footnote content */
@@ -140,8 +164,12 @@ html body .littlefoot__content a:hover {
 
 /* Paragraphs in footnote content */
 html body .littlefoot__content p {
-  font-size: 1.4rem !important;
-  line-height: 1.7 !important;
+  font-family: 'Mulish', sans-serif !important;
+  font-size: 17px !important;
+  font-weight: 200 !important;
+  line-height: 1.6 !important;
+  color: #333333 !important;
+  text-align: center !important;
   margin: 0.5em 0 !important;
 }
 
@@ -240,11 +268,11 @@ a[href^="#fnref"],
     max-width: 90vw !important;
   }
   html body .littlefoot__content {
-    font-size: 1.25rem !important;
-    padding: 1.2rem !important;
+    font-size: 15px !important;
+    padding: 0.8rem 1rem !important;
   }
   html body .littlefoot__content p {
-    font-size: 1.25rem !important;
+    font-size: 15px !important;
   }
   .show-citations-list .footnotes {
     margin-top: 2rem !important;
@@ -274,6 +302,7 @@ html body .littlefoot__button:focus-visible {
   html body .littlefoot__content,
   html body .littlefoot__content p {
     color: #f9fafb !important;
+    font-family: 'Mulish', sans-serif !important;
   }
   .show-citations-list .footnotes {
     border-top-color: #374151 !important;
@@ -313,7 +342,7 @@ html body .littlefoot__button:focus-visible {
           // Custom button template
           buttonTemplate: '<button class="littlefoot__button" id="<% reference %>" title="See Footnote <% number %>" aria-label="Footnote <% number %>" style="font-size: 1.1rem !important; font-weight: 900 !important;"><span class="littlefoot__button__content" style="font-weight: 900 !important;"><% number %></span></button>',
         });
-        console.log('✅ Littlefoot V2 initialized with toggle support!');
+        console.log('✅ Littlefoot V3 initialized with toggle support!');
       } catch (e) {
         console.error('❌ Error initializing Littlefoot:', e);
       }
@@ -347,12 +376,13 @@ html body .littlefoot__button:focus-visible {
 
 <!--
   ═══════════════════════════════════════════════════════════════
-  V2_2026-04-02 UNIFIED VERSION WITH PER-POST TOGGLE
+  V3_2026-04-03 UNIFIED VERSION WITH PER-POST TOGGLE
 
-  WHAT CHANGED IN V2:
-  - Footnote buttons are now LIGHT PINK by default (subtle)
-  - On hover, they go DARK MAROON with WHITE text (accessible)
-  - Popover text is 1.4rem (much bigger and readable)
+  WHAT CHANGED IN V3 (from V2):
+  - Popover font: Mulish (matches site body copy), was serif default
+  - Popover size: 17px (matches body copy), was too small
+  - Popover text: centered with balanced padding
+  - Uses littlefoot CSS custom properties for reliable theming
   - All color combos meet WCAG AAA contrast (7:1+)
 
   HOW TO USE:
