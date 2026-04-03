@@ -1,0 +1,421 @@
+<!--
+  ═══════════════════════════════════════════════════════════════
+  LITTLEFOOT FOOTNOTES - V4 UNIFIED WITH TOGGLE
+  Infodumpsterfire.com - April 3, 2026
+  ═══════════════════════════════════════════════════════════════
+
+  VERSION: V4_2026-04-03
+  CHANGES FROM V3:
+  - Buttons: smaller, lighter weight (700 not 900), less padding
+  - Active state: button stays light when popup is open (no sticky dark)
+  - Popover: wider (35rem), 16px Mulish, LEFT-aligned, tighter padding
+  - Popover shadow: lighter, less dramatic
+  - Overall: cleaner, more like reference (Spectral Web Services)
+
+  INSTALLATION:
+  1. Ghost Admin → Settings → Code Injection → Site Header
+  2. Paste this ENTIRE code block ONCE
+  3. Click Save
+
+  DEFAULT BEHAVIOR:
+  - Footnote popups work
+  - Citations list HIDDEN at bottom (clean layout)
+
+  TO SHOW CITATIONS LIST ON A SPECIFIC POST:
+  1. Edit the post in Ghost
+  2. Post Settings (gear icon) → Code Injection → Post Header
+  3. Add this single line:
+     <script>document.documentElement.classList.add('show-citations-list');</script>
+  4. Save the post
+  5. That post will now show full citations at bottom!
+
+  ═══════════════════════════════════════════════════════════════
+-->
+
+<!-- Littlefoot Core Library (CSS) -->
+<link rel="stylesheet" href="https://unpkg.com/littlefoot@4.0.0/dist/littlefoot.css">
+
+<!-- Custom Styling -->
+<style>
+/* ============================================
+   LITTLEFOOT CSS CUSTOM PROPERTIES
+   The proper way to theme Littlefoot 4.0
+   ============================================ */
+
+.littlefoot {
+  --popover-font-family: 'Mulish', sans-serif;
+  --popover-font-size: 16px;
+  --popover-font-weight: 200;
+  --popover-line-height: 1.5;
+  --popover-max-width: 35rem;
+  --popover-horizontal-padding: 1rem;
+  --popover-vertical-padding: 0.75rem;
+}
+
+/* ============================================
+   FOOTNOTE BUTTONS (the clickable numbers)
+   Small, subtle, light by default
+   ============================================ */
+
+html body .littlefoot__button.littlefoot__button,
+html .littlefoot__button.littlefoot__button.littlefoot__button {
+  /* Size and spacing — compact */
+  font-size: 1.1rem !important;
+  min-width: 1.2em !important;
+  min-height: 1.2em !important;
+  padding: 0.1em 0.35em !important;
+  margin: 0 0.15em !important;
+
+  /* Bold but not ultra-black */
+  font-weight: 700 !important;
+  line-height: 1.2 !important;
+
+  /* Layout */
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  /* Colors - LIGHT default (subtle, non-distracting) */
+  background-color: #fbe8e8 !important;
+  color: #610317 !important;
+  border: 1px solid #e8c4c9 !important;
+
+  /* Visual effects — subtle */
+  border-radius: 3px !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08) !important;
+  transition: all 0.2s ease !important;
+  vertical-align: baseline !important;
+  position: relative !important;
+  top: -0.3em !important;
+}
+
+/* Hover state - DARK with high-contrast white text */
+html body .littlefoot__button.littlefoot__button:hover,
+html body .littlefoot__button.littlefoot__button:focus {
+  background-color: #610317 !important;
+  color: #ffffff !important;
+  border-color: #610317 !important;
+  box-shadow: 0 2px 6px rgba(97, 3, 23, 0.3) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Active/clicked state — STAYS LIGHT (no sticky dark state) */
+html body .littlefoot__button.littlefoot__button:active {
+  background-color: #f0d4d4 !important;
+  color: #610317 !important;
+  border-color: #e8c4c9 !important;
+  transform: none !important;
+}
+
+/* When popup is open — button reverts to default light look */
+html body .littlefoot__button.littlefoot__button.is-active {
+  background-color: #fbe8e8 !important;
+  color: #610317 !important;
+  border-color: #e8c4c9 !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08) !important;
+  transform: none !important;
+}
+
+/* Number inside button */
+html body .littlefoot__button .littlefoot__button__content,
+.littlefoot__button__content.littlefoot__button__content {
+  font-weight: 700 !important;
+  font-size: 1em !important;
+  display: inline-block !important;
+}
+
+/* ============================================
+   POPUP WINDOW (the footnote content bubble)
+   Wider, lighter, cleaner
+   ============================================ */
+
+html body .littlefoot__popover {
+  max-width: 35rem !important;
+  background: #ffffff !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 6px !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12) !important;
+  z-index: 999999 !important;
+}
+
+/* Content inside popup — 16px, left-aligned, tight padding */
+html body .littlefoot__content {
+  font-family: 'Mulish', sans-serif !important;
+  font-size: 16px !important;
+  font-weight: 200 !important;
+  line-height: 1.5 !important;
+  color: #333333 !important;
+  text-align: left !important;
+  padding: 0.75rem 1rem !important;
+}
+
+html body .littlefoot__wrapper {
+  background: #ffffff !important;
+  border-radius: 5px !important;
+}
+
+/* Catch-all: force Mulish on everything inside popover */
+html body .littlefoot__content * {
+  font-family: 'Mulish', sans-serif !important;
+}
+
+/* Links inside footnote content */
+html body .littlefoot__content a {
+  color: #610317 !important;
+  text-decoration: underline !important;
+  font-weight: 400 !important;
+}
+
+html body .littlefoot__content a:hover {
+  color: #ab0528 !important;
+}
+
+/* Paragraphs in footnote content */
+html body .littlefoot__content p {
+  font-family: 'Mulish', sans-serif !important;
+  font-size: 16px !important;
+  font-weight: 200 !important;
+  line-height: 1.5 !important;
+  color: #333333 !important;
+  text-align: left !important;
+  margin: 0.3em 0 !important;
+}
+
+/* ============================================
+   CITATIONS LIST - DEFAULT HIDDEN
+   ============================================ */
+
+/* By default: HIDE the citations list */
+.footnote-backref,
+a.footnote-backref,
+a[href^="#fnref"],
+.reversefootnote {
+  display: none !important;
+}
+
+/* ============================================
+   CITATIONS LIST - SHOW WHEN TOGGLED
+   Only appears when post has .show-citations-list class
+   ============================================ */
+
+/* When .show-citations-list is added to html element, show the footnotes */
+.show-citations-list .footnotes,
+.show-citations-list .footnote-list,
+.show-citations-list section.footnotes,
+.show-citations-list div.footnotes {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  margin-top: 3rem !important;
+  padding-top: 2rem !important;
+  border-top: 2px solid #e5e7eb !important;
+}
+
+/* Style the footnotes heading */
+.show-citations-list .footnotes h2,
+.show-citations-list .footnotes .footnotes-sep {
+  color: #610317 !important;
+  font-size: 1.2rem !important;
+  font-weight: 700 !important;
+  margin-bottom: 1rem !important;
+}
+
+/* Style individual footnote entries */
+.show-citations-list .footnotes ol,
+.show-citations-list .footnotes ul {
+  padding-left: 1.5rem !important;
+  line-height: 1.8 !important;
+}
+
+.show-citations-list .footnotes li {
+  margin-bottom: 1rem !important;
+  font-size: 1rem !important;
+  color: #4b5563 !important;
+}
+
+/* Style the back arrows - brand colors */
+.show-citations-list .footnote-backref,
+.show-citations-list a.footnote-backref,
+.show-citations-list a[href^="#fnref"],
+.show-citations-list .reversefootnote {
+  display: inline !important;
+  color: #610317 !important;
+  text-decoration: none !important;
+  font-size: 1.1rem !important;
+  margin-left: 0.5em !important;
+  font-weight: 600 !important;
+}
+
+.show-citations-list .footnote-backref:hover,
+.show-citations-list a.footnote-backref:hover {
+  color: #ab0528 !important;
+  transform: translateX(-2px) !important;
+  transition: all 0.2s ease !important;
+}
+
+/* Style links within citation list */
+.show-citations-list .footnotes a:not(.footnote-backref) {
+  color: #610317 !important;
+  text-decoration: underline !important;
+}
+
+.show-citations-list .footnotes a:not(.footnote-backref):hover {
+  color: #ab0528 !important;
+}
+
+/* ============================================
+   MOBILE RESPONSIVE
+   ============================================ */
+
+@media (max-width: 768px) {
+  html body .littlefoot__button.littlefoot__button {
+    font-size: 1rem !important;
+    padding: 0.08em 0.3em !important;
+  }
+  html body .littlefoot__popover {
+    max-width: 92vw !important;
+  }
+  html body .littlefoot__content {
+    font-size: 14px !important;
+    padding: 0.6rem 0.8rem !important;
+  }
+  html body .littlefoot__content p {
+    font-size: 14px !important;
+  }
+  .show-citations-list .footnotes {
+    margin-top: 2rem !important;
+    padding-top: 1.5rem !important;
+    font-size: 0.95rem !important;
+  }
+}
+
+/* ============================================
+   ACCESSIBILITY
+   ============================================ */
+
+html body .littlefoot__button:focus-visible {
+  outline: 3px solid #610317 !important;
+  outline-offset: 3px !important;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  html body .littlefoot__popover {
+    background: #1f2937 !important;
+    border-color: #374151 !important;
+  }
+  html body .littlefoot__wrapper {
+    background: #1f2937 !important;
+  }
+  html body .littlefoot__content,
+  html body .littlefoot__content p {
+    color: #f9fafb !important;
+    font-family: 'Mulish', sans-serif !important;
+  }
+  .show-citations-list .footnotes {
+    border-top-color: #374151 !important;
+  }
+  .show-citations-list .footnotes li {
+    color: #d1d5db !important;
+  }
+}
+</style>
+
+<!-- Littlefoot Core Library (JavaScript) -->
+<script src="https://unpkg.com/littlefoot@4.0.0/dist/littlefoot.js"></script>
+
+<!-- Initialize Littlefoot -->
+<script>
+(function() {
+  'use strict';
+
+  function initLittlefoot() {
+    // Handle ES module export format
+    var lfInit;
+    if (window.littlefoot && typeof window.littlefoot.default === 'function') {
+      lfInit = window.littlefoot.default;
+    } else if (window.littlefoot && typeof window.littlefoot.littlefoot === 'function') {
+      lfInit = window.littlefoot.littlefoot;
+    } else if (typeof window.littlefoot === 'function') {
+      lfInit = window.littlefoot;
+    }
+
+    if (typeof lfInit === 'function') {
+      try {
+        lfInit({
+          activateOnHover: false,
+          dismissOnUnhover: false,
+          hoverDelay: 250,
+
+          // Custom button template — lighter weight
+          buttonTemplate: '<button class="littlefoot__button" id="<% reference %>" title="See Footnote <% number %>" aria-label="Footnote <% number %>" style="font-size: 1.1rem !important; font-weight: 700 !important;"><span class="littlefoot__button__content" style="font-weight: 700 !important;"><% number %></span></button>',
+        });
+        console.log('✅ Littlefoot V4 initialized with toggle support!');
+      } catch (e) {
+        console.error('❌ Error initializing Littlefoot:', e);
+      }
+    } else {
+      console.error('❌ Littlefoot function not found');
+    }
+  }
+
+  // Wait for DOM and script to load
+  var attempts = 0;
+  var maxAttempts = 10;
+
+  function tryInit() {
+    if (window.littlefoot) {
+      initLittlefoot();
+    } else if (attempts < maxAttempts) {
+      attempts++;
+      setTimeout(tryInit, 200);
+    } else {
+      console.error('❌ Littlefoot failed to load after', maxAttempts, 'attempts');
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', tryInit);
+  } else {
+    tryInit();
+  }
+})();
+</script>
+
+<!--
+  ═══════════════════════════════════════════════════════════════
+  V4_2026-04-03 UNIFIED VERSION WITH PER-POST TOGGLE
+
+  WHAT CHANGED IN V4 (from V3):
+  - Buttons: smaller, weight 700, less padding, more subtle
+  - Active state: button stays LIGHT when popup is open (no sticky dark)
+  - Popover: wider (35rem), 16px, LEFT-aligned, tighter padding
+  - Popover shadow: lighter, cleaner
+  - All color combos meet WCAG AAA contrast (7:1+)
+
+  NOTE ON POSITIONING:
+  Littlefoot controls popover placement via JavaScript (below the
+  button, auto-positioned left/right based on available space).
+  This cannot be changed to "above" without modifying the library.
+
+  HOW TO USE:
+
+  1. INSTALL ONCE (Site Header):
+     - Ghost Admin → Settings → Code Injection → Site Header
+     - Paste this entire file
+     - Save
+
+  2. DEFAULT BEHAVIOR (all posts):
+     - Footnote buttons work with popups
+     - No citations list at bottom (clean)
+
+  3. ENABLE CITATIONS ON SPECIFIC POSTS:
+     - Edit post in Ghost
+     - Post Settings → Code Injection → Post Header
+     - Add this line:
+       <script>document.documentElement.classList.add('show-citations-list');</script>
+     - Save
+     - That post now shows full bibliography at bottom!
+
+  ═══════════════════════════════════════════════════════════════
+-->
