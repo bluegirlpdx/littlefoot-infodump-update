@@ -45,7 +45,7 @@
 .littlefoot {
   --popover-font-family: 'Mulish', sans-serif;
   --popover-font-size: 16px;
-  --popover-font-weight: 200;
+  --popover-font-weight: 400;
   --popover-line-height: 1.5;
   --popover-max-width: 35rem;
   --popover-horizontal-padding: 1rem;
@@ -138,25 +138,9 @@ html body .littlefoot__popover {
   z-index: 999999 !important;
 }
 
-/* Content inside popup — 16px, left-aligned, tight padding */
-html body .littlefoot__content {
-  font-family: 'Mulish', sans-serif !important;
-  font-size: 16px !important;
-  font-weight: 200 !important;
-  line-height: 1.5 !important;
-  color: #333333 !important;
-  text-align: left !important;
-  padding: 0.75rem 1rem !important;
-}
-
 html body .littlefoot__wrapper {
   background: #ffffff !important;
   border-radius: 5px !important;
-}
-
-/* Catch-all: force Mulish on everything inside popover */
-html body .littlefoot__content * {
-  font-family: 'Mulish', sans-serif !important;
 }
 
 /* Links inside footnote content */
@@ -168,17 +152,6 @@ html body .littlefoot__content a {
 
 html body .littlefoot__content a:hover {
   color: #ab0528 !important;
-}
-
-/* Paragraphs in footnote content */
-html body .littlefoot__content p {
-  font-family: 'Mulish', sans-serif !important;
-  font-size: 16px !important;
-  font-weight: 200 !important;
-  line-height: 1.5 !important;
-  color: #333333 !important;
-  text-align: left !important;
-  margin: 0.3em 0 !important;
 }
 
 /* ============================================
@@ -264,6 +237,55 @@ a[href^="#fnref"],
 }
 
 /* ============================================
+   FORCE POPOVER STYLING EVERYWHERE
+   Littlefoot's mobile bottom-panel uses class-based
+   styling, not media queries — so these must be
+   outside @media to override it
+   ============================================ */
+
+html body .littlefoot__popover.littlefoot__popover,
+html body .littlefoot__popover.is-active,
+html body .littlefoot__popover.is-below,
+html body .littlefoot__popover.is-above {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+}
+
+html body .littlefoot__wrapper.littlefoot__wrapper,
+html body .littlefoot__popover .littlefoot__wrapper {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+}
+
+html body .littlefoot__content.littlefoot__content,
+html body .littlefoot__popover .littlefoot__content {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  color: #333333 !important;
+  font-family: 'Mulish', sans-serif !important;
+  font-size: 16px !important;
+  font-weight: 400 !important;
+  line-height: 1.5 !important;
+  text-align: left !important;
+  padding: 0.75rem 1rem !important;
+}
+
+html body .littlefoot__content.littlefoot__content p,
+html body .littlefoot__popover .littlefoot__content p {
+  color: #333333 !important;
+  font-family: 'Mulish', sans-serif !important;
+  font-size: 16px !important;
+  font-weight: 400 !important;
+  line-height: 1.5 !important;
+  text-align: left !important;
+  margin: 0.3em 0 !important;
+}
+
+html body .littlefoot__content *:not(a) {
+  color: #333333 !important;
+}
+
+/* ============================================
    MOBILE RESPONSIVE
    ============================================ */
 
@@ -272,34 +294,14 @@ a[href^="#fnref"],
     font-size: 1rem !important;
     padding: 0.08em 0.3em !important;
   }
-  /* Force white background and visible text on mobile bottom panel */
   html body .littlefoot__popover,
   html body .littlefoot__popover.is-active {
     max-width: 92vw !important;
-    background: #ffffff !important;
   }
-  html body .littlefoot__wrapper,
-  html body .littlefoot__popover .littlefoot__wrapper {
-    background: #ffffff !important;
-  }
-  html body .littlefoot__content,
-  html body .littlefoot__popover .littlefoot__content {
+  html body .littlefoot__content.littlefoot__content,
+  html body .littlefoot__content.littlefoot__content p {
     font-size: 14px !important;
     padding: 0.6rem 0.8rem !important;
-    color: #333333 !important;
-    font-weight: 400 !important;
-    font-family: 'Mulish', sans-serif !important;
-    background: #ffffff !important;
-  }
-  html body .littlefoot__content p,
-  html body .littlefoot__popover .littlefoot__content p {
-    font-size: 14px !important;
-    color: #333333 !important;
-    font-weight: 400 !important;
-  }
-  html body .littlefoot__content *:not(a) {
-    color: #333333 !important;
-    font-weight: 400 !important;
   }
   .show-citations-list .footnotes {
     margin-top: 2rem !important;
