@@ -272,15 +272,34 @@ a[href^="#fnref"],
     font-size: 1rem !important;
     padding: 0.08em 0.3em !important;
   }
-  html body .littlefoot__popover {
+  /* Force white background and visible text on mobile bottom panel */
+  html body .littlefoot__popover,
+  html body .littlefoot__popover.is-active {
     max-width: 92vw !important;
+    background: #ffffff !important;
   }
-  html body .littlefoot__content {
+  html body .littlefoot__wrapper,
+  html body .littlefoot__popover .littlefoot__wrapper {
+    background: #ffffff !important;
+  }
+  html body .littlefoot__content,
+  html body .littlefoot__popover .littlefoot__content {
     font-size: 14px !important;
     padding: 0.6rem 0.8rem !important;
+    color: #333333 !important;
+    font-weight: 400 !important;
+    font-family: 'Mulish', sans-serif !important;
+    background: #ffffff !important;
   }
-  html body .littlefoot__content p {
+  html body .littlefoot__content p,
+  html body .littlefoot__popover .littlefoot__content p {
     font-size: 14px !important;
+    color: #333333 !important;
+    font-weight: 400 !important;
+  }
+  html body .littlefoot__content *:not(a) {
+    color: #333333 !important;
+    font-weight: 400 !important;
   }
   .show-citations-list .footnotes {
     margin-top: 2rem !important;
